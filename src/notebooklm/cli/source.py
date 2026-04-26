@@ -22,7 +22,12 @@ from pathlib import Path
 import click
 from rich.table import Table
 
-from .._url_utils import is_youtube_url
+from .._url_utils import (
+    detect_drive_mime_type,
+    extract_drive_file_id,
+    is_google_drive_url,
+    is_youtube_url,
+)
 from ..client import NotebookLMClient
 from ..types import source_status_to_str
 from .helpers import (
@@ -237,6 +242,7 @@ def source_add(ctx, content, notebook_id, source_type, title, mime_type, json_ou
 
     \b
     Source type is auto-detected:
+      - Google Drive / Docs URLs -> drive (use --title to set name)
       - URLs (http/https) -> url or youtube
       - Existing files (.txt, .md) -> text
       - Other content -> text (inline)
@@ -249,6 +255,7 @@ def source_add(ctx, content, notebook_id, source_type, title, mime_type, json_ou
       source add https://youtube.com/...          # YouTube video
       source add "My notes here"                  # Inline text
       source add "My notes" --title "Research"   # Text with custom title
+      source add https://drive.google.com/file/d/FILE_ID/view  # Drive file
     """
     nb_id = require_notebook(notebook_id)
 
@@ -256,10 +263,24 @@ def source_add(ctx, content, notebook_id, source_type, title, mime_type, json_ou
     detected_type = source_type
     file_content = None
     file_title = title
+    drive_file_id: str | None = None
+    drive_mime: str | None = None
 
     if detected_type is None:
         if content.startswith(("http://", "https://")):
-            detected_type = "youtube" if is_youtube_url(content) else "url"
+            if is_google_drive_url(content):
+                detected_type = "drive"
+                drive_file_id = extract_drive_file_id(content)
+                drive_mime = detect_drive_mime_type(content)
+                if not drive_file_id:
+                    raise click.ClickException(
+                        f"Could not extract a file ID from the Drive URL: {content}\n"
+                        "Use 'source add-drive FILE_ID TITLE' to add it manually."
+                    )
+            elif is_youtube_url(content):
+                detected_type = "youtube"
+            else:
+                detected_type = "url"
         elif Path(content).exists():
             file_path = Path(content).resolve()  # Resolve symlinks
             # Security: Ensure it's a regular file (not a symlink to sensitive file)
@@ -274,7 +295,16 @@ def source_add(ctx, content, notebook_id, source_type, title, mime_type, json_ou
     async def _run():
         async with NotebookLMClient(client_auth) as client:
             nb_id_resolved = await resolve_notebook_id(client, nb_id)
-            if detected_type == "url" or detected_type == "youtube":
+            if detected_type == "drive":
+                assert drive_file_id is not None  # guaranteed by validation above
+                drive_title = file_title or "Google Drive File"
+                src = await client.sources.add_drive(
+                    nb_id_resolved,
+                    drive_file_id,
+                    drive_title,
+                    drive_mime or "application/pdf",
+                )
+            elif detected_type == "url" or detected_type == "youtube":
                 src = await client.sources.add_url(nb_id_resolved, content)
             elif detected_type == "text":
                 text_content = file_content if file_content is not None else content
@@ -476,8 +506,8 @@ def source_refresh(ctx, source_id, notebook_id, client_auth):
 
 
 @source.command("add-drive")
-@click.argument("file_id")
-@click.argument("title")
+@click.argument("file_id_or_url")
+@click.argument("title", default="")
 @click.option(
     "-n",
     "--notebook",
@@ -488,12 +518,22 @@ def source_refresh(ctx, source_id, notebook_id, client_auth):
 @click.option(
     "--mime-type",
     type=click.Choice(["google-doc", "google-slides", "google-sheets", "pdf"]),
-    default="google-doc",
-    help="Document type (default: google-doc)",
+    default=None,
+    help="Document type (auto-detected from URL if not set, default: google-doc)",
 )
 @with_client
-def source_add_drive(ctx, file_id, title, notebook_id, mime_type, client_auth):
-    """Add a Google Drive document as a source."""
+def source_add_drive(ctx, file_id_or_url, title, notebook_id, mime_type, client_auth):
+    """Add a Google Drive document as a source.
+
+    FILE_ID_OR_URL can be either a raw Drive file ID or a full Google Drive /
+    Google Docs URL (the file ID will be extracted automatically).
+
+    \b
+    Examples:
+      source add-drive 1abc123xyz "My Doc"
+      source add-drive https://drive.google.com/file/d/1abc123xyz/view "My File"
+      source add-drive https://docs.google.com/document/d/1abc123xyz/edit "My Doc"
+    """
     from ..rpc import DriveMimeType
 
     nb_id = require_notebook(notebook_id)
@@ -503,13 +543,40 @@ def source_add_drive(ctx, file_id, title, notebook_id, mime_type, client_auth):
         "google-sheets": DriveMimeType.GOOGLE_SHEETS.value,
         "pdf": DriveMimeType.PDF.value,
     }
-    mime = mime_map[mime_type]
+
+    # Accept a full Drive URL in place of a raw file ID
+    resolved_file_id = file_id_or_url
+    auto_mime: str | None = None
+    if file_id_or_url.startswith(("http://", "https://")):
+        if not is_google_drive_url(file_id_or_url):
+            raise click.ClickException(
+                f"URL does not appear to be a Google Drive URL: {file_id_or_url}"
+            )
+        extracted = extract_drive_file_id(file_id_or_url)
+        if not extracted:
+            raise click.ClickException(
+                f"Could not extract a file ID from the URL: {file_id_or_url}"
+            )
+        resolved_file_id = extracted
+        auto_mime = detect_drive_mime_type(file_id_or_url)
+
+    # Resolve mime type: explicit flag > auto-detected from URL > default google-doc
+    if mime_type:
+        mime = mime_map[mime_type]
+    elif auto_mime:
+        mime = auto_mime
+    else:
+        mime = DriveMimeType.GOOGLE_DOC.value
+
+    drive_title = title or "Google Drive File"
 
     async def _run():
         async with NotebookLMClient(client_auth) as client:
             nb_id_resolved = await resolve_notebook_id(client, nb_id)
             with console.status("Adding Drive source..."):
-                src = await client.sources.add_drive(nb_id_resolved, file_id, title, mime)
+                src = await client.sources.add_drive(
+                    nb_id_resolved, resolved_file_id, drive_title, mime
+                )
 
             console.print(f"[green]Added Drive source:[/green] {src.id}")
             console.print(f"[bold]Title:[/bold] {src.title}")
