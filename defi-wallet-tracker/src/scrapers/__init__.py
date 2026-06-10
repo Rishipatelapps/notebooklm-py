@@ -3,6 +3,7 @@ from .geckoterminal import GeckoTerminalClient
 from .cielo import CieloClient
 from .moralis import MoralisClient
 from .etherscan import EtherscanClient
+from .blockscout import BlockscoutClient
 
 __all__ = [
     "DexScreenerClient",
@@ -10,4 +11,5 @@ __all__ = [
     "CieloClient",
     "MoralisClient",
     "EtherscanClient",
+    "BlockscoutClient",
 ]
