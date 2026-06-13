@@ -61,7 +61,10 @@ class WalletScorer:
         for s in scores:
             track_a = (s.win_rate >= min_win_rate and s.total_trades >= min_trades
                        and s.early_entries >= min_early_entries)
-            track_b = s.early_entries >= 2  # caught ≥2 independent high-mult tokens
+            # Track B: strong early-entry signal even with thin trade history
+            # Requires either 2+ independent 5x+ catches, or 1 catch that went 10x+
+            track_b = (s.early_entries >= 2
+                       or (s.early_entries >= 1 and s.best_early_entry_x >= 10.0))
             if track_a or track_b:
                 result.append(s)
         return result
