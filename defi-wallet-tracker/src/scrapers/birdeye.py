@@ -104,29 +104,32 @@ class BirdeyeClient(BaseClient):
             return {}
 
     async def get_trending_tokens(
-        self, chain: str, limit: int = 20
+        self, chain: str, limit: int = 50
     ) -> list[dict]:
         """
-        Trending tokens with 24h price change — useful for finding recent 5x+ runs.
+        Top trending tokens by rank — rank #1 is most trending.
         Returns list of {address, symbol, price, price_change_24h, liquidity}.
         """
         try:
             data = await self._get(
                 "/defi/token_trending",
-                params={"sort_by": "rank", "sort_type": "desc", "offset": 0, "limit": limit},
+                # sort_type asc = rank 1 first (most trending)
+                params={"sort_by": "rank", "sort_type": "asc", "offset": 0, "limit": limit},
                 headers=self._chain_headers(chain),
             )
-            items = ((data or {}).get("data") or {}).get("items") or []
+            # Response: data.tokens (list)
+            tokens = ((data or {}).get("data") or {}).get("tokens") or []
             results = []
-            for item in items:
+            for item in tokens:
                 results.append({
                     "address": item.get("address", ""),
                     "symbol": item.get("symbol", ""),
                     "name": item.get("name", ""),
                     "price": float(item.get("price") or 0),
-                    "price_change_24h": float(item.get("priceChange24hPercent") or 0),
+                    "price_change_24h": float(item.get("price24hChangePercent") or 0),
                     "liquidity": float(item.get("liquidity") or 0),
-                    "volume_24h": float(item.get("v24hUSD") or 0),
+                    "volume_24h": float(item.get("volume24hUSD") or 0),
+                    "rank": int(item.get("rank") or 9999),
                     "chain": chain,
                 })
             return results
