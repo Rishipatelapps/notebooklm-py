@@ -23,6 +23,19 @@ from ..scrapers.gmgn import GMGNClient
 
 console = Console()
 
+# Well-known protocol routers, bridges, and aggregators to exclude from results
+_KNOWN_CONTRACTS: set[str] = {
+    "0x000000000022d473030f116ddee9f6b43ac78ba3",  # Permit2
+    "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad",  # Uniswap Universal Router
+    "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",  # Uniswap V2 Router
+    "0xe592427a0aece92de3edee1f18e0157c05861564",  # Uniswap V3 Router
+    "0x00000000003b3cc22af3ae1eac0440bcee416b40",  # 1inch v5
+    "0x1111111254eeb25477b68fb85ed929f73a960582",  # 1inch v5 router
+    "0xdef1c0ded9bec7f1a1670819833240f027b25eff",  # 0x Exchange Proxy
+    "0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f",  # SushiSwap Router
+    "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45",  # Uniswap SwapRouter02
+}
+
 
 class WalletTracker:
     """
@@ -172,6 +185,14 @@ class WalletTracker:
                                 wallet_tokens[trade.wallet].append(token)
                     except Exception:
                         continue
+
+        # Filter out known protocol contracts and MEV bot vanity addresses
+        # (addresses with ≥8 leading zero bytes are overwhelmingly contracts/bots)
+        wallet_chain = {
+            w: c for w, c in wallet_chain.items()
+            if not w.lower().startswith("0x" + "0" * 8)
+            and w.lower() not in _KNOWN_CONTRACTS
+        }
 
         console.print(
             f"  Found [yellow]{len(wallet_chain)}[/yellow] candidate wallets"
