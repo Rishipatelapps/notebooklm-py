@@ -37,9 +37,33 @@ class BaseClient:
         retry=retry_if_exception_type((httpx.TimeoutException, httpx.NetworkError)),
         reraise=True,
     )
-    async def _get(self, path: str, params: dict | None = None) -> Any:
+    async def _get(
+        self,
+        path: str,
+        params: dict | None = None,
+        headers: dict | None = None,
+    ) -> Any:
         await self._throttle()
         assert self._client is not None, "Use as async context manager"
-        resp = await self._client.get(path, params=params)
+        resp = await self._client.get(path, params=params, headers=headers)
+        resp.raise_for_status()
+        return resp.json()
+
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=1, max=8),
+        retry=retry_if_exception_type((httpx.TimeoutException, httpx.NetworkError)),
+        reraise=True,
+    )
+    async def _post(
+        self,
+        path: str,
+        json: dict | None = None,
+        params: dict | None = None,
+        headers: dict | None = None,
+    ) -> Any:
+        await self._throttle()
+        assert self._client is not None, "Use as async context manager"
+        resp = await self._client.post(path, json=json, params=params, headers=headers)
         resp.raise_for_status()
         return resp.json()

@@ -6,11 +6,13 @@ Sources:
   2. CoinGecko /search/trending → currently hot tokens
   3. GeckoTerminal /trending_pools (multiple pages) → high-volume pools
   4. DexScreener /token-boosts/top → promoted tokens with momentum
+  5. Birdeye /defi/token_trending + /defi/v2/tokens/new_listing → Solana + multi-chain
 """
 import asyncio
 from datetime import datetime, timezone
 
 from .base import BaseClient
+from .birdeye import BirdeyeClient, BIRDEYE_CHAINS
 from .coingecko import CoinGeckoClient, GECKO_NETWORKS
 from .geckoterminal import GeckoTerminalClient
 from .dexscreener import DexScreenerClient
@@ -26,10 +28,12 @@ class TokenDiscovery:
     def __init__(
         self,
         coingecko_key: str = "",
+        birdeye_key: str = "",
         min_multiplier: float = 5.0,
         min_liquidity_usd: float = 5_000,
     ) -> None:
         self._cg_key = coingecko_key
+        self._birdeye_key = birdeye_key
         self._min_mult = min_multiplier
         self._min_liquidity = min_liquidity_usd
 
@@ -50,6 +54,9 @@ class TokenDiscovery:
 
         tasks.append(self._from_gecko_terminal(chains))
         tasks.append(self._from_dexscreener(chains))
+
+        if self._birdeye_key:
+            tasks.append(self._from_birdeye(chains))
 
         gathered = await asyncio.gather(*tasks, return_exceptions=True)
         for batch in gathered:
@@ -279,4 +286,61 @@ class TokenDiscovery:
                             })
                 except Exception:
                     pass
+        return results
+
+    async def _from_birdeye(self, chains: list[str]) -> list[dict]:
+        """
+        Birdeye trending + new listings across supported chains.
+        Especially valuable for Solana where GeckoTerminal coverage is thinner.
+        """
+        results = []
+        min_gain_pct = (self._min_mult - 1) * 100  # e.g. 400% for 5x
+
+        birdeye_chains = [c for c in chains if c in BIRDEYE_CHAINS]
+        if not birdeye_chains:
+            return results
+
+        async with BirdeyeClient(self._birdeye_key, chain=birdeye_chains[0]) as birdeye:
+            for chain in birdeye_chains:
+                # Trending tokens: find those with 24h price change ≥ min threshold
+                try:
+                    trending = await birdeye.get_trending_tokens(chain, limit=50)
+                    for token in trending:
+                        change = token.get("price_change_24h", 0)
+                        liquidity = token.get("liquidity", 0)
+                        if change >= min_gain_pct and liquidity >= self._min_liquidity:
+                            results.append({
+                                "address": token["address"],
+                                "symbol": token.get("symbol", ""),
+                                "chain": chain,
+                                "multiplier": round(change / 100 + 1, 2),
+                                "pair_address": token.get("address", ""),
+                                "listed_at": None,
+                                "source": "birdeye_trending",
+                            })
+                    await asyncio.sleep(0.7)
+                except Exception:
+                    pass
+
+                # New listings: recently listed tokens with high 24h change
+                try:
+                    new_tokens = await birdeye.get_new_listings(
+                        chain, limit=30, min_liquidity_usd=self._min_liquidity
+                    )
+                    for token in new_tokens:
+                        change = token.get("price_change_24h", 0)
+                        if change >= min_gain_pct:
+                            results.append({
+                                "address": token["address"],
+                                "symbol": token.get("symbol", ""),
+                                "chain": chain,
+                                "multiplier": round(change / 100 + 1, 2),
+                                "pair_address": token.get("address", ""),
+                                "listed_at": None,
+                                "source": "birdeye_new",
+                            })
+                    await asyncio.sleep(0.7)
+                except Exception:
+                    pass
+
         return results

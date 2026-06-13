@@ -42,10 +42,12 @@ def scan(
     moralis_key = os.getenv("MORALIS_API_KEY", "")
     etherscan_key = os.getenv("ETHERSCAN_API_KEY", "")
     coingecko_key = os.getenv("COINGECKO_API_KEY", "")
+    birdeye_key = os.getenv("BIRDEYE_API_KEY", "")
+    gmgn_key = os.getenv("GMGN_API_KEY", "")
 
     scoring_sources = [k for k, v in [
         ("Etherscan", etherscan_key), ("CoinGecko", coingecko_key),
-        ("Cielo", cielo_key), ("Moralis", moralis_key)
+        ("Cielo", cielo_key), ("Moralis", moralis_key), ("Birdeye", birdeye_key),
     ] if v]
     if scoring_sources:
         console.print(f"[green]Scoring APIs: {', '.join(scoring_sources)}[/green]")
@@ -60,6 +62,8 @@ def scan(
         moralis_key=moralis_key,
         etherscan_key=etherscan_key,
         coingecko_key=coingecko_key,
+        birdeye_key=birdeye_key,
+        gmgn_key=gmgn_key,
         min_win_rate=min_win_rate,
         min_trades=min_trades,
         min_multiplier=min_multiplier,

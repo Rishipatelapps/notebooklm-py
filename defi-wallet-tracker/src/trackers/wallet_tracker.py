@@ -53,6 +53,8 @@ class WalletTracker:
         moralis_key: str = "",
         etherscan_key: str = "",
         coingecko_key: str = "",
+        birdeye_key: str = "",
+        gmgn_key: str = "",
         min_win_rate: float = 85.0,
         min_trades: int = 5,
         min_multiplier: float = 5.0,
@@ -64,6 +66,8 @@ class WalletTracker:
         self._moralis_key = moralis_key
         self._etherscan_key = etherscan_key
         self._coingecko_key = coingecko_key
+        self._birdeye_key = birdeye_key
+        self._gmgn_key = gmgn_key
         self._min_win_rate = min_win_rate
         self._min_trades = min_trades
         self._min_multiplier = min_multiplier
@@ -80,13 +84,12 @@ class WalletTracker:
         )
         self._discovery = TokenDiscovery(
             coingecko_key=coingecko_key,
+            birdeye_key=birdeye_key,
             min_multiplier=min_multiplier,
         )
         self._extractor = (
             EarlyBuyerExtractor(etherscan_key) if etherscan_key else None
         )
-        import os as _os
-        self._gmgn_key = _os.getenv("GMGN_API_KEY", "")
 
     async def run(self) -> list[WalletScore]:
         """Full discovery + scoring pipeline."""
