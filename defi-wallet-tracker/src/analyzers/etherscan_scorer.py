@@ -8,7 +8,6 @@ Strategy per wallet:
   4. Compute real USD PnL per position → win rate, avg multiplier
 """
 import asyncio
-from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 
 from ..chains import get_chain
@@ -44,7 +43,7 @@ class EtherscanWalletScorer:
         async with EtherscanClient(self._etherscan_key) as escan:
             raw_transfers = await escan.get_token_transfers(
                 wallet, chain_obj.etherscan_chain_id,
-                page=1, offset=200
+                page=1, offset=100  # 100 is enough to detect trade history
             )
             trades = escan.transfers_to_trades(raw_transfers, wallet, chain)
 
@@ -59,37 +58,24 @@ class EtherscanWalletScorer:
         return self._compute_score(wallet, chain, trades)
 
     async def _enrich_with_prices(self, trades: list[Trade], chain: str) -> list[Trade]:
-        """Fill in amount_usd using CoinGecko historical prices."""
-        # Collect unique token addresses
+        """Fill in amount_usd using CoinGecko batch current prices (fast — no per-trade API calls)."""
         token_addrs = list({t.token_address for t in trades if t.token_address})
+        if not token_addrs:
+            return trades
 
         async with CoinGeckoClient(self._coingecko_key) as gecko:
-            # Batch get current prices first (fast)
             current_prices = await gecko.get_batch_prices(chain, token_addrs)
 
-            # For trades without USD, fetch historical price
-            enriched: list[Trade] = []
-            for trade in trades:
-                if trade.amount_usd > 0:
-                    enriched.append(trade)
-                    continue
-                if not trade.token_address:
-                    enriched.append(trade)
-                    continue
-
-                price = current_prices.get(trade.token_address.lower(), 0.0)
-                if price == 0:
-                    try:
-                        price = await gecko.get_price_at_timestamp(
-                            chain, trade.token_address, trade.timestamp
-                        )
-                    except Exception:
-                        price = 0.0
-
+        enriched: list[Trade] = []
+        for trade in trades:
+            if trade.amount_usd > 0:
+                enriched.append(trade)
+                continue
+            price = current_prices.get((trade.token_address or "").lower(), 0.0)
+            if price > 0:
                 trade.price_usd = price
                 trade.amount_usd = trade.amount_tokens * price
-                enriched.append(trade)
-                await asyncio.sleep(0.1)
+            enriched.append(trade)
 
         return enriched
 
