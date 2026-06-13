@@ -43,6 +43,7 @@ def export_csv(wallets: list[WalletScore], path: str | Path) -> Path:
 def _score_to_dict(w: WalletScore) -> dict:
     return {
         "address": w.address,
+        "chain": w.chains[0] if w.chains else "",
         "chains": w.chains,
         "label": w.label,
         "source": w.source,

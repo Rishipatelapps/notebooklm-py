@@ -44,13 +44,16 @@ class WalletScore:
     @property
     def score(self) -> float:
         """Composite ranking score (higher = better)."""
-        if self.total_trades < 5:
+        if self.total_trades == 0 and self.early_entries == 0:
             return 0.0
-        win_component = self.win_rate * 60
-        multiplier_component = min(self.avg_multiplier, 20) * 2
-        early_component = min(self.early_entries, 10) * 1.5
-        volume_bonus = min(self.total_trades / 100, 1.0) * 5
-        return win_component + multiplier_component + early_component + volume_bonus
+        # Win rate contribution scaled by statistical confidence (more trades = more weight)
+        trade_confidence = min(self.total_trades / 10.0, 1.0)
+        win_component = self.win_rate * trade_confidence * 0.6        # 0–60
+        multiplier_component = min(self.avg_multiplier, 20) * 2       # 0–40
+        early_component = min(self.early_entries, 10) * 3.0           # 0–30
+        best_entry_component = min(self.best_early_entry_x / 50, 1.0) * 10  # 0–10
+        volume_bonus = min(self.total_trades / 100, 1.0) * 5          # 0–5
+        return win_component + multiplier_component + early_component + best_entry_component + volume_bonus
 
     def passes_filter(self, min_win_rate: float = 85.0, min_trades: int = 5) -> bool:
         return self.win_rate >= min_win_rate and self.total_trades >= min_trades
