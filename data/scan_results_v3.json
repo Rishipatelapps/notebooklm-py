@@ -1,0 +1,270 @@
+{
+  "generated_at": "2026-06-13T15:43:09.017101+00:00",
+  "count": 12,
+  "wallets": [
+    {
+      "address": "0x6cc707f9097e9e5692bc4ad21e17ed01659d5952",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "etherscan+coingecko",
+      "win_rate": 100.0,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "avg_multiplier": 1.748,
+      "max_multiplier": 1.75,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 28.83,
+      "avg_pnl_per_trade": 28.83,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0x76f83f887ec18e6dfc8c606f82ffc978a2212838",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_multiplier": 17.69,
+      "max_multiplier": 26.48,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0x7b1b59abbd965e6817fba5e59e1a2217a4784232",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_multiplier": 17.69,
+      "max_multiplier": 26.48,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0xa1cc2a5237362b201724b9d28c6895d7c057a380",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_multiplier": 17.69,
+      "max_multiplier": 26.48,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0xe7b08d5784d4177495d824b83dc0076dec7a27a1",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_multiplier": 17.69,
+      "max_multiplier": 26.48,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0xf845c18158d189712acbb66882de20a5482fc60b",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_multiplier": 17.69,
+      "max_multiplier": 26.48,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0xcaddd4d354811c909da9cee331f408ca15a4b58d",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_multiplier": 17.69,
+      "max_multiplier": 26.48,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0x7ed6b71a3124005e9248aea16f395d9a6f393964",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_multiplier": 17.69,
+      "max_multiplier": 26.48,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0x7f54f05635d15cde17a49502fedb9d1803a3be8a",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_multiplier": 17.69,
+      "max_multiplier": 26.48,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0xa790114d73ae83e1082fe71e94501b56d8f9e467",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_multiplier": 17.69,
+      "max_multiplier": 26.48,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0x000000000004444c5dc75cb358380d2e3de08a90",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 3,
+      "winning_trades": 3,
+      "losing_trades": 0,
+      "avg_multiplier": 14.39,
+      "max_multiplier": 26.48,
+      "early_entries": 3,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    },
+    {
+      "address": "0xcdb9ad163c7869d1cf0958dd123c973e29ed2961",
+      "chains": [
+        "eth"
+      ],
+      "label": "",
+      "source": "gecko_terminal",
+      "win_rate": 100.0,
+      "total_trades": 2,
+      "winning_trades": 2,
+      "losing_trades": 0,
+      "avg_multiplier": 17.69,
+      "max_multiplier": 26.48,
+      "early_entries": 2,
+      "best_early_entry_x": 26.48,
+      "best_early_token": "DOGELLIONAIRE",
+      "total_pnl_usd": 0.0,
+      "avg_pnl_per_trade": 0.0,
+      "score": 0.0,
+      "active_since": null,
+      "last_active": null
+    }
+  ]
+}
