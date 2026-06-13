@@ -146,5 +146,21 @@ def export_seeds(
     console.print(f"[green]Seed wallets exported → {output}[/green]")
 
 
+@app.command("dashboard")
+def dashboard(
+    port: int = typer.Option(8501, "--port", "-p", help="Port to serve dashboard on"),
+    scan_file: Path | None = typer.Option(None, "--file", "-f", help="Scan JSON file to load"),
+) -> None:
+    """Launch the Streamlit smart-money dashboard in your browser."""
+    import subprocess as _sp
+    dash_path = Path(__file__).parent.parent / "dashboard" / "app.py"
+    if not dash_path.exists():
+        console.print(f"[red]Dashboard not found at {dash_path}[/red]")
+        raise typer.Exit(1)
+    cmd = ["streamlit", "run", str(dash_path), "--server.port", str(port), "--server.headless", "false"]
+    console.print(f"[green]Starting dashboard on http://localhost:{port}[/green]")
+    _sp.run(cmd, cwd=dash_path.parent.parent)
+
+
 if __name__ == "__main__":
     app()
