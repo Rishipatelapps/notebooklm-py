@@ -40,12 +40,17 @@ def scan(
     """Discover and rank smart-money wallets across DeFi chains."""
     cielo_key = os.getenv("CIELO_API_KEY", "")
     moralis_key = os.getenv("MORALIS_API_KEY", "")
+    etherscan_key = os.getenv("ETHERSCAN_API_KEY", "")
+    coingecko_key = os.getenv("COINGECKO_API_KEY", "")
 
-    if not cielo_key and not moralis_key:
-        console.print(
-            "[yellow]Warning: No CIELO_API_KEY or MORALIS_API_KEY set in .env — "
-            "wallet scoring will be limited to on-chain trade analysis only.[/yellow]"
-        )
+    scoring_sources = [k for k, v in [
+        ("Etherscan", etherscan_key), ("CoinGecko", coingecko_key),
+        ("Cielo", cielo_key), ("Moralis", moralis_key)
+    ] if v]
+    if scoring_sources:
+        console.print(f"[green]Scoring APIs: {', '.join(scoring_sources)}[/green]")
+    else:
+        console.print("[yellow]No scoring API keys — showing provisional rankings only.[/yellow]")
 
     console.print(f"[bold]Scanning {len(chains)} chain(s): {', '.join(chains)}[/bold]")
     console.print(f"  Criteria: win rate ≥ {min_win_rate}%, min {min_trades} trades, min {min_multiplier}x entries\n")
@@ -53,6 +58,8 @@ def scan(
     tracker = WalletTracker(
         cielo_key=cielo_key,
         moralis_key=moralis_key,
+        etherscan_key=etherscan_key,
+        coingecko_key=coingecko_key,
         min_win_rate=min_win_rate,
         min_trades=min_trades,
         min_multiplier=min_multiplier,

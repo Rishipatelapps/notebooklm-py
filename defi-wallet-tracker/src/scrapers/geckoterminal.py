@@ -64,13 +64,22 @@ class GeckoTerminalClient(BaseClient):
 
     def _parse_pool(self, item: dict, network: str) -> Token:
         attrs = item.get("attributes", {})
+        rels = item.get("relationships", {})
         created_ts = attrs.get("pool_created_at", "")
         try:
             listed_at = datetime.fromisoformat(created_ts.replace("Z", "+00:00"))
         except Exception:
             listed_at = None
+
+        # Extract token address from relationships: format "eth_0xABCD..."
+        base_token_id = rels.get("base_token", {}).get("data", {}).get("id", "")
+        token_address = base_token_id.split("_", 1)[-1] if "_" in base_token_id else ""
+
+        # Pool address from attributes or id
+        pair_address = attrs.get("address", "") or item.get("id", "").split("_")[-1]
+
         return Token(
-            address=attrs.get("base_token_price_usd", ""),  # placeholder — pool addr in relationships
+            address=token_address.lower(),
             symbol=attrs.get("name", "").split(" / ")[0],
             name=attrs.get("name", ""),
             chain=network,
@@ -80,7 +89,7 @@ class GeckoTerminalClient(BaseClient):
             volume_24h=float((attrs.get("volume_usd") or {}).get("h24") or 0),
             price_change_24h=float((attrs.get("price_change_percentage") or {}).get("h24") or 0),
             listed_at=listed_at,
-            pair_address=item.get("id", "").split("_")[-1],
+            pair_address=pair_address,
             dex="",
-            extra={"gecko_id": item.get("id", "")},
+            extra={"gecko_id": item.get("id", ""), "base_token_id": base_token_id},
         )

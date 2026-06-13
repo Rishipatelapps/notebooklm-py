@@ -25,6 +25,7 @@ class EtherscanClient(BaseClient):
         end_block: int = 99999999,
         page: int = 1,
         offset: int = 100,
+        sort: str = "desc",
     ) -> list[dict]:
         """ERC-20 token transfer list for a wallet."""
         params = {
@@ -36,7 +37,33 @@ class EtherscanClient(BaseClient):
             "endblock": end_block,
             "page": page,
             "offset": offset,
-            "sort": "desc",
+            "sort": sort,
+            "apikey": self._api_key,
+        }
+        data = await self._get("/api", params=params)
+        if (data or {}).get("status") != "1":
+            return []
+        return data["result"]
+
+    async def get_token_transfers_by_contract(
+        self,
+        token_address: str,
+        chain_id: int,
+        start_block: int = 0,
+        page: int = 1,
+        offset: int = 200,
+        sort: str = "asc",
+    ) -> list[dict]:
+        """All transfers of a specific ERC-20 token (sorted asc = earliest first)."""
+        params = {
+            "chainid": chain_id,
+            "module": "account",
+            "action": "tokentx",
+            "contractaddress": token_address,
+            "startblock": start_block,
+            "page": page,
+            "offset": offset,
+            "sort": sort,
             "apikey": self._api_key,
         }
         data = await self._get("/api", params=params)

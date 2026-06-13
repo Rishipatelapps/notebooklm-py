@@ -4,6 +4,8 @@ from .cielo import CieloClient
 from .moralis import MoralisClient
 from .etherscan import EtherscanClient
 from .blockscout import BlockscoutClient
+from .coingecko import CoinGeckoClient
+from .gmgn import GMGNClient
 
 __all__ = [
     "DexScreenerClient",
@@ -12,4 +14,6 @@ __all__ = [
     "MoralisClient",
     "EtherscanClient",
     "BlockscoutClient",
+    "CoinGeckoClient",
+    "GMGNClient",
 ]
