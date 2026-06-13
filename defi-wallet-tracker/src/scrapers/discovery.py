@@ -148,10 +148,15 @@ class TokenDiscovery:
         return []  # Already included in _from_coingecko_gainers
 
     async def _from_gecko_terminal(self, chains: list[str]) -> list[dict]:
-        """Pull trending + new pools from GeckoTerminal; use hourly OHLCV for 7-day multiplier."""
+        """
+        Two-stage token discovery via GeckoTerminal:
+          Stage A (fast): new pools — use h24 price change directly from pool attributes
+          Stage B (OHLCV): trending pools — fetch 365-day daily OHLCV to find ATH multiplier
+        """
         results = []
         from ..analyzers.early_entry import EarlyEntryAnalyzer
         early = EarlyEntryAnalyzer(min_multiplier=self._min_mult)
+        min_gain_pct = (self._min_mult - 1) * 100  # e.g. 400% for 5x
 
         chain_map = {
             "eth": "eth", "bsc": "bsc", "base": "base",
@@ -160,56 +165,58 @@ class TokenDiscovery:
             "solana": "solana",
         }
 
-        async def _check_pool(gecko: GeckoTerminalClient, pool, chain: str, chain_slug: str, source: str):
-            if not pool.pair_address or pool.volume_24h < 3_000:
-                return None
-            try:
-                # Hourly candles — catches tokens that ran 5x in the last 7 days
-                ohlcv_h = await gecko.get_pool_ohlcv(chain_slug, pool.pair_address,
-                                                      timeframe="hour", limit=168)
-                mult = early.compute_token_multiplier(ohlcv_h)
-                if mult < self._min_mult:
-                    # Fallback to daily candles (30 day window)
-                    ohlcv_d = await gecko.get_pool_ohlcv(chain_slug, pool.pair_address,
-                                                         timeframe="day", limit=30)
-                    mult = early.compute_token_multiplier(ohlcv_d)
-                if mult >= self._min_mult:
-                    return {
-                        "address": pool.address or "",
-                        "symbol": pool.symbol,
-                        "chain": chain,
-                        "multiplier": round(mult, 2),
-                        "pair_address": pool.pair_address,
-                        "listed_at": pool.listed_at,
-                        "source": source,
-                    }
-            except Exception:
-                pass
-            return None
-
         async with GeckoTerminalClient() as gecko:
             for chain in chains:
                 chain_slug = chain_map.get(chain, chain)
 
-                # New pools — 5 pages
-                for page in range(1, 6):
+                # Stage A: new pools — no OHLCV, use h24 price change attribute
+                for page in range(1, 5):
                     try:
                         pools = await gecko.get_new_pools(chain_slug, page=page)
                         for pool in pools:
-                            item = await _check_pool(gecko, pool, chain, chain_slug, "gecko_terminal")
-                            if item:
-                                results.append(item)
+                            if not pool.pair_address or pool.volume_24h < 3_000:
+                                continue
+                            # price_change_24h is % (e.g. 400 = 5x)
+                            h24_pct = pool.price_change_24h
+                            if h24_pct >= min_gain_pct:
+                                mult = round(h24_pct / 100 + 1, 2)
+                                results.append({
+                                    "address": pool.address or "",
+                                    "symbol": pool.symbol,
+                                    "chain": chain,
+                                    "multiplier": mult,
+                                    "pair_address": pool.pair_address,
+                                    "listed_at": pool.listed_at,
+                                    "source": "gecko_new",
+                                })
                         await asyncio.sleep(0.3)
                     except Exception:
                         break
 
-                # Trending pools
+                # Stage B: trending pools — full 365-day OHLCV multiplier
                 try:
                     trend_pools = await gecko.get_trending_pools(chain_slug)
                     for pool in trend_pools:
-                        item = await _check_pool(gecko, pool, chain, chain_slug, "gecko_trending")
-                        if item:
-                            results.append(item)
+                        if not pool.pair_address or pool.volume_24h < 5_000:
+                            continue
+                        try:
+                            # 365-day daily candles → catch tokens that ran 5x at any point
+                            ohlcv = await gecko.get_pool_ohlcv(
+                                chain_slug, pool.pair_address, timeframe="day", limit=365
+                            )
+                            mult = early.compute_token_multiplier(ohlcv)
+                            if mult >= self._min_mult:
+                                results.append({
+                                    "address": pool.address or "",
+                                    "symbol": pool.symbol,
+                                    "chain": chain,
+                                    "multiplier": round(mult, 2),
+                                    "pair_address": pool.pair_address,
+                                    "listed_at": pool.listed_at,
+                                    "source": "gecko_trending",
+                                })
+                        except Exception:
+                            continue
                 except Exception:
                     pass
 
