@@ -49,10 +49,19 @@ class WalletScorer:
         min_trades: int = 10,
         min_early_entries: int = 1,
     ) -> list[WalletScore]:
-        """Return only wallets meeting the smart-money criteria."""
-        return [
-            s for s in scores
-            if s.win_rate >= min_win_rate
-            and s.total_trades >= min_trades
-            and s.early_entries >= min_early_entries
-        ]
+        """Return only wallets meeting the smart-money criteria.
+
+        Two-track filter:
+          Track A (full history):  win_rate ≥ threshold AND total_trades ≥ min_trades
+          Track B (early buyer):   early_entries ≥ 2 (caught multiple high-mult tokens)
+        Either track passes. This handles wallets whose history is short because
+        they tend to buy early and hold (few completed sell cycles).
+        """
+        result = []
+        for s in scores:
+            track_a = (s.win_rate >= min_win_rate and s.total_trades >= min_trades
+                       and s.early_entries >= min_early_entries)
+            track_b = s.early_entries >= 2  # caught ≥2 independent high-mult tokens
+            if track_a or track_b:
+                result.append(s)
+        return result
