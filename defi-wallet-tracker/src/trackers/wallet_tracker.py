@@ -136,17 +136,26 @@ class WalletTracker:
         wallet_chain: dict[str, str] = {}
         wallet_tokens: dict[str, list[dict]] = defaultdict(list)
 
-        if self._extractor:
-            results = await self._extractor.get_early_buyers_many(tokens[:40], concurrency=4)
+        # EVM chains: use Etherscan extractor (fast, accurate early buyers)
+        evm_tokens = [t for t in tokens[:40] if CHAINS.get(t["chain"], CHAINS["eth"]).is_evm]
+        sol_tokens = [t for t in tokens[:20] if not CHAINS.get(t["chain"], CHAINS["eth"]).is_evm]
+
+        if self._extractor and evm_tokens:
+            results = await self._extractor.get_early_buyers_many(evm_tokens, concurrency=4)
             for token_addr, (chain, buyers) in results.items():
-                token_info = next((t for t in tokens if t["address"] == token_addr), {})
+                token_info = next((t for t in evm_tokens if t["address"] == token_addr), {})
                 for wallet in buyers:
                     wallet_chain[wallet] = chain
                     wallet_tokens[wallet].append(token_info)
-        else:
-            # Fallback: GeckoTerminal pool trades for discovery
+        elif not self._extractor:
+            # No Etherscan key: use GeckoTerminal pool trades for EVM too
+            sol_tokens = tokens[:20]
+
+        # Solana + non-EVM: GeckoTerminal pool trades → recent buyers
+        if sol_tokens:
+            console.print("  [dim]Solana: extracting traders via GeckoTerminal pool trades…[/dim]")
             async with GeckoTerminalClient() as gecko:
-                for token in tokens[:20]:
+                for token in sol_tokens:
                     if not token.get("pair_address"):
                         continue
                     chain_slug = token["chain"]

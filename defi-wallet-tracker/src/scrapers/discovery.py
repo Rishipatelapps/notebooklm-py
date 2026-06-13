@@ -148,44 +148,58 @@ class TokenDiscovery:
         return []  # Already included in _from_coingecko_gainers
 
     async def _from_gecko_terminal(self, chains: list[str]) -> list[dict]:
-        """Pull trending + top pools from GeckoTerminal across multiple pages."""
+        """Pull trending + new pools from GeckoTerminal; use hourly OHLCV for 7-day multiplier."""
         results = []
         from ..analyzers.early_entry import EarlyEntryAnalyzer
         early = EarlyEntryAnalyzer(min_multiplier=self._min_mult)
 
+        chain_map = {
+            "eth": "eth", "bsc": "bsc", "base": "base",
+            "arbitrum": "arbitrum", "polygon": "polygon_pos",
+            "optimism": "optimism", "avalanche": "avax",
+            "solana": "solana",
+        }
+
+        async def _check_pool(gecko: GeckoTerminalClient, pool, chain: str, chain_slug: str, source: str):
+            if not pool.pair_address or pool.volume_24h < 3_000:
+                return None
+            try:
+                # Hourly candles — catches tokens that ran 5x in the last 7 days
+                ohlcv_h = await gecko.get_pool_ohlcv(chain_slug, pool.pair_address,
+                                                      timeframe="hour", limit=168)
+                mult = early.compute_token_multiplier(ohlcv_h)
+                if mult < self._min_mult:
+                    # Fallback to daily candles (30 day window)
+                    ohlcv_d = await gecko.get_pool_ohlcv(chain_slug, pool.pair_address,
+                                                         timeframe="day", limit=30)
+                    mult = early.compute_token_multiplier(ohlcv_d)
+                if mult >= self._min_mult:
+                    return {
+                        "address": pool.address or "",
+                        "symbol": pool.symbol,
+                        "chain": chain,
+                        "multiplier": round(mult, 2),
+                        "pair_address": pool.pair_address,
+                        "listed_at": pool.listed_at,
+                        "source": source,
+                    }
+            except Exception:
+                pass
+            return None
+
         async with GeckoTerminalClient() as gecko:
             for chain in chains:
-                chain_slug = {
-                    "eth": "eth", "bsc": "bsc", "base": "base",
-                    "arbitrum": "arbitrum", "polygon": "polygon_pos",
-                    "optimism": "optimism", "avalanche": "avax",
-                    "solana": "solana",
-                }.get(chain, chain)
+                chain_slug = chain_map.get(chain, chain)
 
-                for page in range(1, 4):
+                # New pools — 5 pages
+                for page in range(1, 6):
                     try:
                         pools = await gecko.get_new_pools(chain_slug, page=page)
                         for pool in pools:
-                            if not pool.pair_address:
-                                continue
-                            if pool.volume_24h < 5_000:
-                                continue
-                            try:
-                                ohlcv = await gecko.get_pool_ohlcv(chain_slug, pool.pair_address)
-                                mult = early.compute_token_multiplier(ohlcv)
-                                if mult >= self._min_mult:
-                                    results.append({
-                                        "address": pool.address or "",
-                                        "symbol": pool.symbol,
-                                        "chain": chain,
-                                        "multiplier": round(mult, 2),
-                                        "pair_address": pool.pair_address,
-                                        "listed_at": pool.listed_at,
-                                        "source": "gecko_terminal",
-                                    })
-                            except Exception:
-                                continue
-                        await asyncio.sleep(0.5)
+                            item = await _check_pool(gecko, pool, chain, chain_slug, "gecko_terminal")
+                            if item:
+                                results.append(item)
+                        await asyncio.sleep(0.3)
                     except Exception:
                         break
 
@@ -193,37 +207,42 @@ class TokenDiscovery:
                 try:
                     trend_pools = await gecko.get_trending_pools(chain_slug)
                     for pool in trend_pools:
-                        if not pool.pair_address or pool.volume_24h < 10_000:
-                            continue
-                        try:
-                            ohlcv = await gecko.get_pool_ohlcv(chain_slug, pool.pair_address)
-                            mult = early.compute_token_multiplier(ohlcv)
-                            if mult >= self._min_mult:
-                                results.append({
-                                    "address": pool.address or "",
-                                    "symbol": pool.symbol,
-                                    "chain": chain,
-                                    "multiplier": round(mult, 2),
-                                    "pair_address": pool.pair_address,
-                                    "listed_at": pool.listed_at,
-                                    "source": "gecko_trending",
-                                })
-                        except Exception:
-                            continue
+                        item = await _check_pool(gecko, pool, chain, chain_slug, "gecko_trending")
+                        if item:
+                            results.append(item)
                 except Exception:
                     pass
 
         return results
 
     async def _from_dexscreener(self, chains: list[str]) -> list[dict]:
-        """DexScreener boosted/trending tokens."""
+        """DexScreener boosted/trending tokens + high-gain new pairs."""
         results = []
+        dex_chain_map = {
+            "eth": "ethereum", "bsc": "bsc", "base": "base",
+            "arbitrum": "arbitrum", "polygon": "polygon",
+            "optimism": "optimism", "avalanche": "avalanche",
+            "solana": "solana",
+        }
+        min_gain_pct = (self._min_mult - 1) * 100  # 400% for 5x
+
         async with DexScreenerClient() as dex:
+            # Boosted tokens (sorted by boost activity — good proxy for momentum)
+            try:
+                boosted = await dex.get_trending_tokens()
+                boosted_addrs = {t.address.lower(): t.chain for t in boosted}
+            except Exception:
+                boosted_addrs = {}
+
             for chain in chains:
+                dex_chain = dex_chain_map.get(chain, chain)
                 try:
-                    pairs = await dex.get_new_pairs(chain, limit=30)
+                    pairs = await dex.get_new_pairs(dex_chain, limit=50)
                     for token in pairs:
-                        if token.price_change_24h >= (self._min_mult - 1) * 100:
+                        if not token.address:
+                            continue
+                        # Direct 24h gain filter
+                        if token.price_change_24h >= min_gain_pct and token.volume_24h >= 5_000:
                             results.append({
                                 "address": token.address,
                                 "symbol": token.symbol,
@@ -232,6 +251,20 @@ class TokenDiscovery:
                                 "pair_address": token.pair_address,
                                 "listed_at": token.listed_at,
                                 "source": "dexscreener_new",
+                            })
+                        # Boosted tokens with any gain ≥ 50% (momentum signal)
+                        elif (token.address.lower() in boosted_addrs
+                              and token.price_change_24h >= 50
+                              and token.volume_24h >= 10_000):
+                            results.append({
+                                "address": token.address,
+                                "symbol": token.symbol,
+                                "chain": chain,
+                                "multiplier": max(round(token.price_change_24h / 100 + 1, 2),
+                                                  self._min_mult),
+                                "pair_address": token.pair_address,
+                                "listed_at": token.listed_at,
+                                "source": "dexscreener_boosted",
                             })
                 except Exception:
                     pass
