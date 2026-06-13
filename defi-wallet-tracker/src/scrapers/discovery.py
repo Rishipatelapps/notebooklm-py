@@ -21,6 +21,8 @@ _COINGECKO_BASE = "https://api.coingecko.com/api/v3"
 class TokenDiscovery:
     """Find tokens that have achieved ≥ min_multiplier since listing."""
 
+    MAX_MULTIPLIER = 10_000.0  # sanity cap — anything higher is likely a data artifact
+
     def __init__(
         self,
         coingecko_key: str = "",
@@ -59,6 +61,8 @@ class TokenDiscovery:
                     seen.add(key)
                     results.append(item)
 
+        # Remove data artifacts: multiplier > 10000x is almost always a bad price feed
+        results = [r for r in results if r.get("multiplier", 0) <= self.MAX_MULTIPLIER]
         results.sort(key=lambda x: x.get("multiplier", 0), reverse=True)
         return results[:max_tokens]
 
