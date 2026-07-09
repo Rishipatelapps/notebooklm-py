@@ -185,6 +185,11 @@
   }
   .btn:hover{background:var(--maroon-deep);transform:translateY(-2px)}
 </style>
+<noscript>
+  <style>
+    section.chapter{opacity:1 !important;transform:none !important}
+  </style>
+</noscript>
 </head>
 <body>
 
@@ -602,11 +607,19 @@
 </footer>
 
 <script>
-  // reading progress
+  // reading progress (rAF-throttled to avoid layout thrashing on scroll)
   const bar=document.getElementById('progress');
+  let ticking=false;
   addEventListener('scroll',()=>{
-    const h=document.documentElement;
-    bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+    if(!ticking){
+      requestAnimationFrame(()=>{
+        const h=document.documentElement;
+        const max=h.scrollHeight-h.clientHeight;
+        bar.style.width=max>0?(h.scrollTop/max*100)+'%':'0%';
+        ticking=false;
+      });
+      ticking=true;
+    }
   },{passive:true});
 
   // reveal on scroll
@@ -615,9 +628,15 @@
   }),{threshold:.08});
   document.querySelectorAll('section.chapter').forEach(s=>io.observe(s));
 
-  // active TOC highlighting
-  const links=[...document.querySelectorAll('.side ol a')];
-  const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  // active TOC highlighting (internal hash links only)
+  const links=[...document.querySelectorAll('.side ol a')].filter(a=>{
+    const href=a.getAttribute('href');
+    return href&&href.startsWith('#')&&href.length>1;
+  });
+  const secs=links.map(a=>{
+    try{return document.querySelector(a.getAttribute('href'));}
+    catch{return null;}
+  }).filter(Boolean);
   const spy=new IntersectionObserver(es=>{
     es.forEach(e=>{
       if(e.isIntersecting){
@@ -625,7 +644,7 @@
       }
     });
   },{rootMargin:'-30% 0px -60% 0px'});
-  secs.forEach(s=>s&&spy.observe(s));
+  secs.forEach(s=>spy.observe(s));
 </script>
 </body>
 </html>
