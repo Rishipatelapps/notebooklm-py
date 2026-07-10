@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Beef Eating in the Vedas &amp; Other Hindu Texts — A Textual Study</title>
 <meta name="description" content="A source-by-source examination of animal sacrifice and beef consumption in the Vedas, Brahmanas, Upanishads, Mahabharata, medical texts and classical commentaries.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#f7f1e5;
@@ -19,6 +22,7 @@
     --card:#fffdf7;
     --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
     --sans:"Avenir Next",Avenir,"Segoe UI",Helvetica,Arial,sans-serif;
+    --deva:"Noto Serif Devanagari","ITF Devanagari","Devanagari Sangam MN","Kohinoor Devanagari","Nirmala UI","Noto Sans Devanagari","Mangal",serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;scroll-padding-top:5rem}
@@ -119,6 +123,32 @@
     float:left;font-size:3.6rem;line-height:.85;padding:.35rem .55rem .1rem 0;color:var(--maroon);font-weight:600;
   }
 
+  /* ---------- devanagari accents ---------- */
+  .deva{font-family:var(--deva);font-weight:500}
+  .chapter-head{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem 1.2rem;flex-wrap:wrap;margin-bottom:.6rem}
+  .chapter-head .kicker{margin-bottom:0}
+  .deva-mark{
+    font-family:var(--deva);font-weight:500;font-size:clamp(1.35rem,3.5vw,2.1rem);
+    color:var(--gold);opacity:.55;line-height:1.15;white-space:nowrap;user-select:none;
+  }
+  .conclusion .deva-mark{color:var(--gold-soft);opacity:.9}
+  .veda-strip{
+    font-family:var(--deva);font-weight:500;font-size:clamp(1rem,2.4vw,1.3rem);
+    color:var(--maroon);opacity:.85;letter-spacing:.04em;margin-bottom:2.4rem;
+    padding:0 1rem;max-width:100%;overflow-wrap:break-word;
+  }
+  .term-banner{
+    display:flex;flex-wrap:wrap;align-items:baseline;column-gap:2.4rem;row-gap:.9rem;
+    background:var(--paper-deep);border:1px solid var(--rule);border-radius:6px;
+    padding:1rem 1.3rem;margin:0 0 1.7rem;
+  }
+  .term-banner .term{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem .7rem;min-width:0}
+  .term-banner .term .deva{font-size:clamp(1.5rem,4.5vw,1.9rem);color:var(--maroon);line-height:1.35}
+  .term-banner .term .iast{font-style:italic;font-size:1rem;color:var(--ink)}
+  .term-banner .term .gloss{font-family:var(--sans);font-size:.8rem;letter-spacing:.03em;color:var(--ink-soft);flex-basis:100%}
+  @media(min-width:700px){.term-banner .term .gloss{flex-basis:auto}}
+  .scholar .deva-name{font-family:var(--deva);font-weight:500;font-size:1.15rem;color:var(--gold);line-height:1.4;margin-bottom:.15rem}
+
   /* ---------- verse cards ---------- */
   figure.verse{
     background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--maroon);
@@ -213,7 +243,7 @@
   <div class="rubric">A Study of the Primary Sources</div>
   <h1>Beef Eating in the <em>Vedas</em> &amp; Other Hindu Texts</h1>
   <p class="sub">What do the Vedas, Brahmanas, Upanishads, the Mahabharata, the ancient medical treatises and the great classical commentators actually say about animal sacrifice and the eating of beef?</p>
-  <div class="ornament">✦ ✦ ✦</div>
+  <div class="veda-strip" lang="sa" aria-hidden="true">ऋग्वेदः · यजुर्वेदः · सामवेदः · अथर्ववेदः</div>
   <p class="byline">By <strong>Rishi Patel</strong> · Originally published on <a href="https://medium.com/@rishipatelapps/beef-eating-in-vedas-and-other-hindu-texts-716250747f6b" target="_blank" rel="noopener">Medium</a></p>
   <div class="scroll-hint">Scroll to read ▾</div>
 </div>
@@ -251,7 +281,10 @@
 
   <!-- I. YAJNA -->
   <section class="chapter" id="yajna">
-    <div class="kicker">Part I · The Ritual Manuals</div>
+    <div class="chapter-head">
+      <div class="kicker">Part I · The Ritual Manuals</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">यज्ञः</div>
+    </div>
     <h2>Yajna and Animal Sacrifice</h2>
     <p class="lead">Present-day Hindu culture is pivoted on the sanctity of the cow — yet the oldest ritual literature of the tradition describes, in exacting procedural detail, the sacrifice of animals and the division of their flesh.</p>
     <p class="drop">The Aitareya Brahmana — one of the oldest commentaries on the Rigveda — does not speak of sacrifice in vague or symbolic terms. It gives the officiating priests step-by-step instructions for the immolation, dissection and distribution of the sacrificial animal.</p>
@@ -289,8 +322,14 @@
 
   <!-- II. NO VIOLENCE -->
   <section class="chapter" id="noviolence">
-    <div class="kicker">Part II · A Polemic Refuted</div>
+    <div class="chapter-head">
+      <div class="kicker">Part II · A Polemic Refuted</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">अध्वरः</div>
+    </div>
     <h2>“There Is No Violence in Yajna”</h2>
+    <div class="term-banner">
+      <div class="term"><span class="deva" lang="sa">अध्वरः</span><span class="iast">adhvara</span><span class="gloss">a name of the Yajna — the word apologists read as “non-violent”</span></div>
+    </div>
     <p>Modern apologists frequently cite Yaska's Nirukta — <em>“Adhvara iti Yajnanaama — Dhvaratihimsaakarmaa tatpratishedhah”</em> (Nirukta 2.7) — to argue that <em>adhvara</em>, a name of the Yajna, means “non-violent,” and therefore no animal could ever have been harmed in it. But the tradition itself explains what the word protects — and it is not the animal.</p>
 
     <div class="debate">
@@ -326,7 +365,10 @@
 
   <!-- III. SACRIFICE IN VEDAS -->
   <section class="chapter" id="vedas-sacrifice">
-    <div class="kicker">Part III · The Samhitas</div>
+    <div class="chapter-head">
+      <div class="kicker">Part III · The Samhitas</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">वेदाः</div>
+    </div>
     <h2>Animal Sacrifice in the Vedas — Including the Cow</h2>
     <p class="drop">Chapter 24 of the Shukla Yajurveda contains a long enumeration of animals assigned to different deities for sacrifice — a catalogue that reformist translators have struggled to explain away. The Shatapatha Brahmana (13/2/2/1–10) confirms that these animals are actually to be immolated. And the Rigveda itself describes the god Indra feasting on the result:</p>
 
@@ -350,7 +392,10 @@
 
   <!-- IV. ASHWAMEDHA -->
   <section class="chapter" id="ashwamedha">
-    <div class="kicker">Part IV · The Horse Sacrifice</div>
+    <div class="chapter-head">
+      <div class="kicker">Part IV · The Horse Sacrifice</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">अश्वमेधः</div>
+    </div>
     <h2>The Ashwamedha Yajna</h2>
     <p class="lead">Rigveda 1/162 — the hymn of the horse sacrifice — follows the victim from the procession to the spit, and its verses leave nothing to the imagination.</p>
 
@@ -406,8 +451,14 @@
 
   <!-- V. MEAT IN VEDAS -->
   <section class="chapter" id="meat-vedas">
-    <div class="kicker">Part V · The Table of the Gods</div>
+    <div class="chapter-head">
+      <div class="kicker">Part V · The Table of the Gods</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">मांसम्</div>
+    </div>
     <h2>Meat Eating in the Vedas — Including Cow Meat</h2>
+    <div class="term-banner">
+      <div class="term"><span class="deva" lang="sa">मांसम्</span><span class="iast">māṃsam</span><span class="gloss">“meat” — derived by Yaska from honour (maananam): the food of esteem</span></div>
+    </div>
     <p class="drop">Yaska's Nirukta (4:3) derives the very word for meat — <em>maamsam</em> — from honour (<em>maananam</em>): flesh was the food of esteem. The funeral and ancestral hymns of the Atharvaveda seat it at the centre of the ritual meal:</p>
 
     <figure class="verse">
@@ -425,24 +476,34 @@
 
   <!-- VI. GOGHNA -->
   <section class="chapter" id="goghna">
-    <div class="kicker">Part VI · A Word Preserved in Grammar</div>
+    <div class="chapter-head">
+      <div class="kicker">Part VI · A Word Preserved in Grammar</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">गोघ्नः</div>
+    </div>
     <h2>Goghna — “The Guest for Whom a Cow Is Killed”</h2>
+    <div class="term-banner">
+      <div class="term"><span class="deva" lang="sa">गोघ्नः</span><span class="iast">goghna</span><span class="gloss">literally “cow-killer” — he for whom the cow is killed</span></div>
+      <div class="term"><span class="deva" lang="sa">अतिथिः</span><span class="iast">atithi</span><span class="gloss">“guest”</span></div>
+    </div>
     <p>Sanskrit itself preserves the custom in a single word. <em>Goghna</em> — literally “cow-killer” — is, by the testimony of the grammarians, an honorific for a <strong>guest</strong>: the person on whose arrival a cow was slaughtered.</p>
 
     <div class="scholars">
       <div class="scholar">
+        <div class="deva-name" lang="sa" aria-hidden="true">पाणिनि</div>
         <div class="who">Panini</div>
         <div class="era">Ashtadhyayi 3/4/73 · c. 5th cent. BCE</div>
         <q>The words ‘daasa’ and ‘goghna’ are irregularly formed and the affix in these denotes the idea of the Dative or Recipient.</q>
         <span class="src">Goghna = “he on whose coming the cow is killed.”</span>
       </div>
       <div class="scholar">
+        <div class="deva-name" lang="sa" aria-hidden="true">भट्टोजि दीक्षित</div>
         <div class="who">Bhattoji Dikshit</div>
         <div class="era">Siddhanta Kaumudi · 14th–17th cent.</div>
         <q>For it a cow is slaughtered; a guest is called ‘goghna.’</q>
         <span class="src">The classical grammar curriculum, still taught today.</span>
       </div>
       <div class="scholar">
+        <div class="deva-name" lang="sa" aria-hidden="true">सायणाचार्य</div>
         <div class="who">Sayana Acharya</div>
         <div class="era">Maadhaviya Dhaatuvrittih · 14th cent.</div>
         <q>A person for whom a cow is slaughtered is known as ‘goghna’ and ‘atithi’ (guest).</q>
@@ -453,8 +514,14 @@
 
   <!-- VII. AGHNYA -->
   <section class="chapter" id="aghnya">
-    <div class="kicker">Part VII · A Polemic Refuted</div>
+    <div class="chapter-head">
+      <div class="kicker">Part VII · A Polemic Refuted</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">अघ्न्या</div>
+    </div>
     <h2>The “Aghnya” Argument</h2>
+    <div class="term-banner">
+      <div class="term"><span class="deva" lang="sa">अघ्न्या</span><span class="iast">aghnyā</span><span class="gloss">“not to be killed” — or, on the alternative derivation, “destroyer of sins”</span></div>
+    </div>
     <p>The strongest apologetic card is the epithet <em>aghnya</em> — “not to be killed” — applied to the cow in the Vedas. But context matters: the term appears in prayers concerning specific milch cows, and admits other derivations altogether.</p>
 
     <figure class="verse">
@@ -476,8 +543,14 @@
 
   <!-- VIII. OTHER EVIDENCE -->
   <section class="chapter" id="other">
-    <div class="kicker">Part VIII · The Upanishads &amp; Dharmashastra</div>
+    <div class="chapter-head">
+      <div class="kicker">Part VIII · The Upanishads &amp; Dharmashastra</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">उपनिषदः</div>
+    </div>
     <h2>Other Evidence of Beef Eating</h2>
+    <div class="term-banner">
+      <div class="term"><span class="deva" lang="sa">मांसौदनम्</span><span class="iast">māṃsaudana</span><span class="gloss">“rice cooked with meat” — the dish prescribed in Brihadaranyaka 6/4/18</span></div>
+    </div>
     <p class="drop">The Brihadaranyaka Upanishad — among the oldest and most revered of all Upanishads — prescribes beef to the couple who desire a learned son:</p>
 
     <figure class="verse gold">
@@ -507,8 +580,14 @@
 
   <!-- IX. MAHABHARATA -->
   <section class="chapter" id="mahabharata">
-    <div class="kicker">Part IX · The Epic</div>
+    <div class="chapter-head">
+      <div class="kicker">Part IX · The Epic</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">महाभारतम्</div>
+    </div>
     <h2>Animal Sacrifice in the Mahabharata</h2>
+    <div class="term-banner">
+      <div class="term"><span class="deva" lang="sa">श्राद्धम्</span><span class="iast">śrāddha</span><span class="gloss">the rite of offerings to the ancestors (Pitris)</span></div>
+    </div>
     <p>In the Anushasana Parva (Book 13, Section 88), Yudhishthira asks Bhishma which offering to the ancestors becomes inexhaustible. The answer ranks beef among the most meritorious of all:</p>
 
     <figure class="verse gold">
@@ -526,7 +605,10 @@
 
   <!-- X. MEDICINE -->
   <section class="chapter" id="medicine">
-    <div class="kicker">Part X · Ayurveda</div>
+    <div class="chapter-head">
+      <div class="kicker">Part X · Ayurveda</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">आयुर्वेदः</div>
+    </div>
     <h2>The Testimony of the Ancient Medical Texts</h2>
     <p class="drop">The Charaka Samhita — the foundational text of Ayurveda — treats beef not as taboo but as pharmacy, prescribing it by name for a catalogue of ailments:</p>
 
@@ -550,30 +632,37 @@
 
   <!-- XI. SCHOLARS -->
   <section class="chapter" id="scholars">
-    <div class="kicker">Part XI · The Acharyas Speak</div>
+    <div class="chapter-head">
+      <div class="kicker">Part XI · The Acharyas Speak</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">आचार्याः</div>
+    </div>
     <h2>The Testimony of the Classical Scholars</h2>
     <p>These are not fringe voices. The greatest philosophers of the tradition — the founders of Vedanta's major schools — defended animal sacrifice as scripturally enjoined duty.</p>
 
     <div class="scholars">
       <div class="scholar">
+        <div class="deva-name" lang="sa" aria-hidden="true">आदि शङ्कराचार्य</div>
         <div class="who">Adi Shankaracharya</div>
         <div class="era">Advaita Vedanta · 8th cent.</div>
         <q>None therefore can know, without scripture, what is either right or wrong. Now from scripture we derive the certain knowledge that the jyotishtoma sacrifice, which involves harm done to animals, is an act of duty; how then can it be called unholy?</q>
         <span class="src">Brahma Sutra Bhashya 3/1/25</span>
       </div>
       <div class="scholar">
+        <div class="deva-name" lang="sa" aria-hidden="true">रामानुजाचार्य</div>
         <div class="who">Ramanujacharya</div>
         <div class="era">Vishishtadvaita · 11th cent.</div>
         <q>Scripture declares that the killing of sacrificial animals makes them go up to the heavenly world, and therefore is not of the nature of harm… ‘With a golden body it ascends to the heavenly world.’</q>
         <span class="src">Sri Bhashya on Brahma Sutra 3/1/25</span>
       </div>
       <div class="scholar">
+        <div class="deva-name" lang="sa" aria-hidden="true">स्कन्दस्वामी</div>
         <div class="who">Sikand Swami</div>
         <div class="era">Vedic commentator · 7th cent.</div>
         <q>Yajna is good for everyone, and no one is injured. The animals who are sacrificed also gain ultimate good. The ancestors say: the animals sacrificed in the Yajna obtain the higher worlds.</q>
         <span class="src">Commentary on Rigveda 1/1/4</span>
       </div>
       <div class="scholar">
+        <div class="deva-name" lang="sa" aria-hidden="true">स्वामी विवेकानन्द</div>
         <div class="who">Swami Vivekananda</div>
         <div class="era">Modern era · 19th cent.</div>
         <q>You will be astonished if I tell you that, according to the old ceremonials, he is not a good Hindu who does not eat beef. On certain occasions he must sacrifice a bull and eat it.</q>
@@ -588,7 +677,10 @@
 
   <!-- XII. CONCLUSION -->
   <section class="chapter conclusion" id="conclusion">
-    <div class="kicker">Part XII · Summation</div>
+    <div class="chapter-head">
+      <div class="kicker">Part XII · Summation</div>
+      <div class="deva-mark" lang="sa" aria-hidden="true">॥ इति ॥</div>
+    </div>
     <h2>Conclusion</h2>
     <p class="big">“There must remain no doubt in anyone's mind after seeing all these testimonies that the Vedic religion permits beef eating — and that sacrificing animals was considered an investment for the greater good.”</p>
     <p>From the ritual manuals of the Brahmanas, through the hymns of the Rigveda and Atharvaveda, the Brihadaranyaka Upanishad, the law of Manu, the epic narratives of the Mahabharata, the pharmacology of Charaka, and the unbroken chain of classical commentators from Panini to Sayana to Shankara — the testimony is consistent, cumulative, and unambiguous. The sanctity of the cow as an absolute, and the vegetarian reading of the Veda, are later developments read back into texts that plainly say otherwise.</p>
