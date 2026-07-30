@@ -6,8 +6,9 @@ by Rishi Patel.
 
 ## Usage
 
-Everything lives in `index.html` — no build step, no dependencies, no
-external requests. Open it directly in a browser:
+Everything lives in `index.html` — no build step, no dependencies (all CSS and
+JS are inline; the only external request is an optional Devanagari web font
+that falls back to system fonts offline). Open it directly in a browser:
 
 ```bash
 open website/index.html        # macOS
@@ -24,11 +25,11 @@ It can be hosted as-is on GitHub Pages, Netlify, Vercel, or any static host.
 
 ## Features
 
-- Dark editorial design: near-black background, warm gold accent, serif body
-  text paired with a sans display face for headings
-- Stat strip summarizing the scope of the sourcing (citation count, Vedas
-  examined, etc.)
-- Sticky-free table of contents linking to every section
-- Block-quoted primary-source citations with attribution
-- Sanskrit (Devanagari) section labels alongside the English headings
-- Fully responsive single-column layout, readable on any screen width
+- Manuscript-inspired design: parchment palette, maroon/gold accents, drop caps
+- Native Devanagari typography: Sanskrit chapter marks, key-term banners with
+  IAST transliteration and glosses — crisp on every screen density,
+  selectable (unlike screenshots), and degrades gracefully offline
+- Sticky table of contents with active-section highlighting
+- Reading progress bar and scroll-reveal animations
+- Primary-source quotations rendered as citation cards
+- Fully responsive, works on mobile
