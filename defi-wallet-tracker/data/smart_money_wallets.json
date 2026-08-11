@@ -1,0 +1,681 @@
+{
+  "generated_at": "2026-06-13",
+  "total_candidates": 431,
+  "methodology": "Repeat early buyer across multiple 5x+ tokens via GeckoTerminal + Etherscan",
+  "top_wallets": [
+    {
+      "rank": 1,
+      "address": "0xed40b1beb8a283a320a7a8f072ab8f2a416f6ded",
+      "chain": "eth",
+      "tokens_caught": 2,
+      "best_multiplier": 8.2,
+      "entries": [
+        {
+          "symbol": "DOGEUS",
+          "multiplier": 8.2
+        },
+        {
+          "symbol": "WOKE",
+          "multiplier": 1.9
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "address": "0x5ba8b0c24ba5307b67e619ad500a635204f73bf1",
+      "chain": "eth",
+      "tokens_caught": 2,
+      "best_multiplier": 7.8,
+      "entries": [
+        {
+          "symbol": "ASTEROID",
+          "multiplier": 7.8
+        },
+        {
+          "symbol": "ASTEROID",
+          "multiplier": 3.0
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "address": "0x000000000004444c5dc75cb358380d2e3de08a90",
+      "chain": "eth",
+      "tokens_caught": 2,
+      "best_multiplier": 3.0,
+      "entries": [
+        {
+          "symbol": "VRTX",
+          "multiplier": 2.3
+        },
+        {
+          "symbol": "uPEG",
+          "multiplier": 3.0
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "address": "0x7f54f05635d15cde17a49502fedb9d1803a3be8a",
+      "chain": "eth",
+      "tokens_caught": 2,
+      "best_multiplier": 3.0,
+      "entries": [
+        {
+          "symbol": "VRTX",
+          "multiplier": 2.3
+        },
+        {
+          "symbol": "uPEG",
+          "multiplier": 3.0
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "address": "0x9b228b4f71b3bc7e4b478251f218060d7b70dc25",
+      "chain": "eth",
+      "tokens_caught": 2,
+      "best_multiplier": 3.0,
+      "entries": [
+        {
+          "symbol": "VRTX",
+          "multiplier": 2.3
+        },
+        {
+          "symbol": "uPEG",
+          "multiplier": 3.0
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "address": "0x66a9893cc07d91d95644aedd05d03f95e1dba8af",
+      "chain": "eth",
+      "tokens_caught": 2,
+      "best_multiplier": 3.0,
+      "entries": [
+        {
+          "symbol": "VRTX",
+          "multiplier": 2.3
+        },
+        {
+          "symbol": "uPEG",
+          "multiplier": 3.0
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "address": "0xfbfeaf0da0f2fde5c66df570133ae35f3eb58c9a",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "address": "0x92fb5b4f8030103e0b11275c30965d1897ff23e5",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "address": "0xa43fe16908251ee70ef74718545e4fe6c5ccec9f",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "address": "0xaf2358e98683265cbd3a48509123d390ddf54534",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "address": "0xf5c0cdb9e18a4af157fdd369540ec9f4912b5edf",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "address": "0x1298652974068e0d3a7bcdd6e29d6409101833ac",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "address": "0x8ccf59bc5daafc43ff67f9825f08bbfbabc5cef6",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 14,
+      "address": "0xe7a63eb84850f42b5e54a8a24a8cb4fdbf2be1f8",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 15,
+      "address": "0x8e5ca1872062bee63b8a46493f6de36d4870ff88",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 16,
+      "address": "0x9adea960e2e41725fff6f0951c790bd6257dfb68",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "address": "0x3191203c8a89d71a8f5a35140e2c7f2477396c92",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 18,
+      "address": "0x836b50c2d4494c9963832e8a790d429350998198",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 19,
+      "address": "0x6925fc4c77c5824ea899cfd4c5102d689d6859d6",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 20,
+      "address": "0x08f120a352c16ab1d58bca16f845377e087e9e4c",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 21,
+      "address": "0x850d763e533d4367348f03fd775b5cdd7dac41dd",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "address": "0xb1b15945842b4b68565caa2f10dad59b6d66e5c6",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "address": "0xb903e91bc67fa5c08ea151b17447a5b775eb7fe9",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "address": "0x36c2b911fb9152f077ac26d4e67c7cbdf3b615a9",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 25,
+      "address": "0x5979ce78d9d25e3c6ca5422dd3a8abf3133ba7b8",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 26,
+      "address": "0x08abf976fe94867f56f722f51a1573ed60d85031",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 27,
+      "address": "0x3d1a2b9f848d8d98731c5ff0be062bb21b5a507a",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 28,
+      "address": "0x26e2c9c8629fcb13d0b30db6447e577816ddd805",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 29,
+      "address": "0xdfd45debf66d2f352cd1cdab260c9ef70ab8fe9d",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 30,
+      "address": "0x4008852f941cfde3b1bb4a5f39df97b06a169c4f",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 31,
+      "address": "0xb790ee1a15964569573f3105c26033c3353a5f17",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 32,
+      "address": "0x5dd3e5931da643daa2f5ac322503757225566c29",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 33,
+      "address": "0xd7c7a6ad7cec69bc3b9c35386661594326e4e6c7",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 34,
+      "address": "0x2a81048da186e75865605a2e10ae663f8d63003d",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 35,
+      "address": "0xf03771f583c78f476e3f8c957e79c134f4fdc351",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 36,
+      "address": "0x17937e3aa5395eadbdaee77afbd63af31b9a8837",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 37,
+      "address": "0x3ad3940b5a56f86a181f7989045b2c7deb7f8356",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 38,
+      "address": "0x9bd5c8bfbe7e0fd78693f1f7e5b3610bdda9d5aa",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 39,
+      "address": "0xdfc9b13bd2dc0afc13e3a81466bad5a6b3f15451",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 40,
+      "address": "0xb71bce9ec5d0a66215a032d6daa83e743eeef380",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 41,
+      "address": "0x19848274b125f4f75c6d0524f5196473c023d21a",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 42,
+      "address": "0xa956ed68a405f58995640dd465083405ed3ad5eb",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 43,
+      "address": "0xb1f06a0f6154df25dba5033ea04782031495cdc8",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 44,
+      "address": "0x15ddbc80da895519a90625bd6210671298f76769",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 45,
+      "address": "0xad106e36fb4e94387f85342d9d9c31aaf5ce293b",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 46,
+      "address": "0x9348c754f5d95b2c5ae9facaa7d0732b3d56fc54",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 47,
+      "address": "0x3ca3a6d10a8489d17c31f591930940c3da70f9fd",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 48,
+      "address": "0x946990daabd864c3d96ec0ffc59335f4e25696ae",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 49,
+      "address": "0x4e9d602c1bc0dfd59ea37a67824f505dd1f659b8",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    },
+    {
+      "rank": 50,
+      "address": "0xe46b6fef0daa72dfab6ab5f430c635997d9f4bb9",
+      "chain": "eth",
+      "tokens_caught": 1,
+      "best_multiplier": 100.0,
+      "entries": [
+        {
+          "symbol": "PEPE",
+          "multiplier": 100.0
+        }
+      ]
+    }
+  ]
+}
